@@ -3,6 +3,8 @@
   "private": true,
   "dependencies": {
     "@rails/webpacker": "3.4",
+    "@types/actioncable": "^0.0.2",
+    "actioncable": "^5.2.0",
     "bootstrap": "^4.0.0",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",

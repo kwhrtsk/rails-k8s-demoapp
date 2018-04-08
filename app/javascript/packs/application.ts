@@ -9,6 +9,7 @@
 
 import 'bootstrap';
 
+import 'cable';
 import './application.scss';
 
 console.log('Hello World from Webpacker');

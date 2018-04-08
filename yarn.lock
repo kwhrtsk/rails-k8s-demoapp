@@ -31,6 +31,10 @@
     webpack "^3.10.0"
     webpack-manifest-plugin "^1.3.2"
 
+"@types/actioncable@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@types/actioncable/-/actioncable-0.0.2.tgz#a1b2faa384438315dd33f210f188f623c2c8900c"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -55,6 +59,10 @@ acorn@^4.0.3:
 acorn@^5.0.0:
   version "5.5.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.5.3.tgz#f473dd47e0277a08e28e9bec5aeeb04751f0b8c9"
+
+actioncable@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/actioncable/-/actioncable-5.2.0.tgz#97a4e06681c749a8af86e1ead8487bf5e87b59e4"
 
 ajv-keywords@^3.1.0:
   version "3.1.0"
