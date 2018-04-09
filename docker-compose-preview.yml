@@ -1,0 +1,43 @@
+version: "3"
+services:
+  puma:
+    image: demoapp
+    build:
+      context: .
+    env_file:
+      - .dockerenv/mysql
+      - .dockerenv/rails
+    environment:
+      - RAILS_SERVE_STATIC_FILES=true
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
+      - redis
+    command: ./bin/start-puma
+
+  sidekiq:
+    image: demoapp
+    env_file:
+      - .dockerenv/mysql
+      - .dockerenv/rails
+    depends_on:
+      - puma
+    command: ./bin/start-sidekiq
+
+  mysql:
+    image: mysql:5.7.21
+    env_file:
+      - .dockerenv/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=topsecret
+# uncomment to persist data
+#    volumes:
+#      - ./tmp/mysql:/var/lib/mysql
+
+  redis:
+    image: redis:4.0.9
+# uncomment to persist data
+#    volumes:
+#      - ./tmp/redis:/data
+    command: redis-server --appendonly yes

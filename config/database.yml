@@ -16,4 +16,4 @@ test:
 
 production:
   <<: *default
-  database: demoapp_production
+  database: <%= ENV.fetch("MYSQL_DATABASE") { "demoapp_production" } %>
