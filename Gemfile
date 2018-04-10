@@ -13,6 +13,9 @@ gem 'webpacker', '~> 3.4'
 gem 'sidekiq', '~> 5.1.2'
 gem 'slim-rails', '~> 3.1.3'
 gem 'active_link_to', '~> 1.0.5'
+gem 'bootstrap_form',
+  git: 'https://github.com/bootstrap-ruby/bootstrap_form.git',
+  branch: "master"
 
 group :development, :test, :assets do
   gem 'sass-rails', '~> 5.0'

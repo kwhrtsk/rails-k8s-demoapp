@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/bootstrap-ruby/bootstrap_form.git
+  revision: 077b91d0bf6513e4f6b40d38cdb6a5c71d58dd7b
+  branch: master
+  specs:
+    bootstrap_form (4.0.0.dev)
+      rails (>= 5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -232,6 +240,7 @@ PLATFORMS
 DEPENDENCIES
   active_link_to (~> 1.0.5)
   bootsnap (>= 1.1.0)
+  bootstrap_form!
   byebug
   capybara (>= 2.15, < 4.0)
   chromedriver-helper
