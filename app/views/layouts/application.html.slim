@@ -4,7 +4,20 @@ html
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application'
-    = stylesheet_pack_tag 'application'
+    = stylesheet_pack_tag    'application'
+    = javascript_pack_tag    'application'
   body
-    = yield
+    nav.navbar.navbar-expand.navbar-light.bg-light
+      .container
+        = link_to "Demo App", root_path, class: "navbar-brand"
+        button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-exmapded="false" aria-label="Toggle navigation")
+        .collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+            = navbar_item "Home", root_path
+          ul.navbar-nav
+            li.nav-item.dropdown
+              a#dropdown_admin.nav-link.dropdown-toggle(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Admin
+              .dropdown-menu(aria-labelledby="dropdown_admin")
+                = link_to "Sidekiq", sidekiq_web_path, target: "_blank", class: "dropdown-item"
+    .container.pt-3
+      = yield
