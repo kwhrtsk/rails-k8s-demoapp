@@ -1,0 +1,17 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5.7.21
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_PASSWORD
+    ports:
+      - 3306:3306
+    volumes:
+      - ./tmp/mysql:/var/lib/mysql
+  redis:
+    image: redis:4.0.9
+    ports:
+      - 6379:6379
+    volumes:
+      - ./tmp/redis:/data
+    command: redis-server --appendonly yes
