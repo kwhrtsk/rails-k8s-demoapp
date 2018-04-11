@@ -1,0 +1,16 @@
+.row.justify-content-lg-center
+  .col-lg-9
+    = bootstrap_form_for @message do |f|
+      .form-row
+        .col
+          = f.text_area :body
+        .col-md-1.col-sm-2.col-3
+          label &nbsp;
+          = f.submit "Submit"
+
+    - @messages.each do |message|
+      .card
+        .card-body.clearfix
+          p= message.body
+          small.float-right(title=message.created_at)
+            = time_ago_in_words message.created_at
