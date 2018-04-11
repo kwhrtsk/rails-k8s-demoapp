@@ -14,4 +14,8 @@ class Message < ApplicationRecord
   validates :body,
     presence: true,
     length: { maximum: MAX_BODY_LENGTH }
+
+  after_create do
+    NotifyUpdateJob.perform_later(body)
+  end
 end
