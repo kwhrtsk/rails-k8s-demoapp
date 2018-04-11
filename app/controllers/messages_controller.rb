@@ -7,6 +7,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.create(create_params)
+    ResponseMessageJob.set(wait: 3.seconds).perform_later(@message)
     if @message.valid?
       redirect_to messages_url
     else

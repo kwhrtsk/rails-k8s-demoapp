@@ -9,4 +9,9 @@
 #
 
 class Message < ApplicationRecord
+  MAX_BODY_LENGTH = 140
+
+  validates :body,
+    presence: true,
+    length: { maximum: MAX_BODY_LENGTH }
 end
