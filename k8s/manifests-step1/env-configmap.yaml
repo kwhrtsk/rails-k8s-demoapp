@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demoapp-env
+data:
+  RAILS_SERVE_STATIC_FILES: "true"
+  MYSQL_USER: demoapp
+  MYSQL_DATABASE: demoapp_production
