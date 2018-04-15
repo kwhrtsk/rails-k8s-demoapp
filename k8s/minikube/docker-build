@@ -1,0 +1,4 @@
+#!/bin/bash -xue
+
+cd $(dirname $0)
+docker build ../../ -t demoapp:0.1.0
