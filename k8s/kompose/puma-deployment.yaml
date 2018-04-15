@@ -1,0 +1,60 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../../docker-compose-preview.yml
+    kompose.version: 1.11.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: puma
+  name: puma
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: puma
+    spec:
+      containers:
+      - args:
+        - ./bin/start-puma
+        env:
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_DATABASE
+              name: puma-dockerenv-mysql
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_HOST
+              name: puma-dockerenv-rails
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_PASSWORD
+              name: puma-dockerenv-mysql
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_USER
+              name: puma-dockerenv-mysql
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_URL
+              name: puma-dockerenv-rails
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            configMapKeyRef:
+              key: SECRET_KEY_BASE
+              name: puma-dockerenv-rails
+        image: demoapp
+        name: puma
+        ports:
+        - containerPort: 3000
+        resources: {}
+      restartPolicy: Always
+status: {}

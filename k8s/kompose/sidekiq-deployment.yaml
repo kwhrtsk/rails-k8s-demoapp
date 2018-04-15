@@ -1,0 +1,58 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../../docker-compose-preview.yml
+    kompose.version: 1.11.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sidekiq
+  name: sidekiq
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sidekiq
+    spec:
+      containers:
+      - args:
+        - ./bin/start-sidekiq
+        env:
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_DATABASE
+              name: sidekiq-dockerenv-mysql
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_HOST
+              name: sidekiq-dockerenv-rails
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_PASSWORD
+              name: sidekiq-dockerenv-mysql
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_USER
+              name: sidekiq-dockerenv-mysql
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_URL
+              name: sidekiq-dockerenv-rails
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            configMapKeyRef:
+              key: SECRET_KEY_BASE
+              name: sidekiq-dockerenv-rails
+        image: demoapp
+        name: sidekiq
+        resources: {}
+      restartPolicy: Always
+status: {}
