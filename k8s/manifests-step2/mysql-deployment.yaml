@@ -2,34 +2,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demoapp-sidekiq
+  name: demoapp-mysql
   labels:
     app: demoapp
-    component: sidekiq
+    component: mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: demoapp
-      component: sidekiq
+      component: mysql
   template:
     metadata:
       labels:
         app: demoapp
-        component: sidekiq
+        component: mysql
     spec:
       restartPolicy: Always
       containers:
-        - name: sidekiq
-          image: demoapp:0.0.1
-          imagePullPolicy: IfNotPresent
-          command:
-            - ./bin/start-sidekiq
+        - name: mysql
+          image: mysql:5.7.21
+          ports:
+            - containerPort: 3000
           env:
-            - name: MYSQL_HOST
-              value: demoapp-mysql
-            - name: REDIS_URL
-              value: redis://demoapp-redis:6379/1
             - name: MYSQL_DATABASE
               valueFrom:
                 configMapKeyRef:
@@ -40,13 +35,13 @@ spec:
                 configMapKeyRef:
                   key: MYSQL_USER
                   name: demoapp-env
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_ROOT_PASSWORD
+                  name: demoapp-env
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: MYSQL_PASSWORD
-                  name: demoapp-env
-            - name: SECRET_KEY_BASE
-              valueFrom:
-                secretKeyRef:
-                  key: SECRET_KEY_BASE
                   name: demoapp-env

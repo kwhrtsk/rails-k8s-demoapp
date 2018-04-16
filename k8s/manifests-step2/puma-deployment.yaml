@@ -2,34 +2,51 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demoapp-sidekiq
+  name: demoapp-puma
   labels:
     app: demoapp
-    component: sidekiq
+    component: puma
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: demoapp
-      component: sidekiq
+      component: puma
   template:
     metadata:
       labels:
         app: demoapp
-        component: sidekiq
+        component: puma
     spec:
       restartPolicy: Always
       containers:
-        - name: sidekiq
+        - name: puma
           image: demoapp:0.0.1
           imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
           command:
-            - ./bin/start-sidekiq
+            - ./bin/start-puma
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
           env:
             - name: MYSQL_HOST
               value: demoapp-mysql
             - name: REDIS_URL
               value: redis://demoapp-redis:6379/1
+            - name: RAILS_SERVE_STATIC_FILES
+              valueFrom:
+                configMapKeyRef:
+                  key: RAILS_SERVE_STATIC_FILES
+                  name: demoapp-env
             - name: MYSQL_DATABASE
               valueFrom:
                 configMapKeyRef:

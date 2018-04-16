@@ -1,30 +1,16 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: demoapp-sidekiq
-  labels:
-    app: demoapp
-    component: sidekiq
+  name: demoapp-setup
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: demoapp
-      component: sidekiq
   template:
-    metadata:
-      labels:
-        app: demoapp
-        component: sidekiq
     spec:
-      restartPolicy: Always
       containers:
-        - name: sidekiq
+        - name: setup
           image: demoapp:0.0.1
-          imagePullPolicy: IfNotPresent
           command:
-            - ./bin/start-sidekiq
+            - ./bin/setup-db
           env:
             - name: MYSQL_HOST
               value: demoapp-mysql
@@ -50,3 +36,5 @@ spec:
                 secretKeyRef:
                   key: SECRET_KEY_BASE
                   name: demoapp-env
+      restartPolicy: Never
+  backoffLimit: 4

@@ -21,12 +21,12 @@ spec:
       restartPolicy: Always
       containers:
         - name: puma
-          image: demoapp:0.1.0
+          image: demoapp:0.0.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
           command:
-            - ./bin/setup-and-start-puma
+            - ./bin/setup-db-and-start-puma
           livenessProbe:
             httpGet:
               path: /
