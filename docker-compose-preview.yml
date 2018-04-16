@@ -14,7 +14,7 @@ services:
     depends_on:
       - mysql
       - redis
-    command: ./bin/start-puma
+    command: ./bin/setup-and-start-puma
 
   sidekiq:
     image: demoapp

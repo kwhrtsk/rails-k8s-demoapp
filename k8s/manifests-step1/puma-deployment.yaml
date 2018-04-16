@@ -7,7 +7,7 @@ metadata:
     app: demoapp
     component: puma
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: demoapp
@@ -26,7 +26,7 @@ spec:
           ports:
             - containerPort: 3000
           command:
-            - ./bin/start-puma
+            - ./bin/setup-and-start-puma
           livenessProbe:
             httpGet:
               path: /
