@@ -1,4 +1,5 @@
 #!/bin/bash -xue
 
 cd $(dirname $0)
-docker build ../../ -t demoapp:0.1.0
+TAG=${1:-0.0.1}
+docker build ../../ -t demoapp:$TAG
