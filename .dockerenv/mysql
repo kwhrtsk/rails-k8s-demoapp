@@ -1,3 +1,4 @@
 MYSQL_USER=demoapp
 MYSQL_PASSWORD=secret
 MYSQL_DATABASE=demoapp_production
+MYSQL_ROOT_PASSWORD=topsecret
