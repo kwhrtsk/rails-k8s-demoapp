@@ -2,8 +2,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: demoapp-env
+  name: demoapp-rails-env
 data:
   RAILS_SERVE_STATIC_FILES: "true"
+  RAILS_LOG_TO_STDOUT: "true"
+  MYSQL_HOST: demoapp-mysql
   MYSQL_USER: demoapp
   MYSQL_DATABASE: demoapp_production
+  REDIS_URL: redis://demoapp-redis:6379/1

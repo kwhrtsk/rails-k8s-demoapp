@@ -11,30 +11,10 @@ spec:
           image: demoapp:0.0.1
           command:
             - ./bin/setup-db
-          env:
-            - name: MYSQL_HOST
-              value: demoapp-mysql
-            - name: REDIS_URL
-              value: redis://demoapp-redis:6379/1
-            - name: MYSQL_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  key: MYSQL_DATABASE
-                  name: demoapp-env
-            - name: MYSQL_USER
-              valueFrom:
-                configMapKeyRef:
-                  key: MYSQL_USER
-                  name: demoapp-env
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: MYSQL_PASSWORD
-                  name: demoapp-env
-            - name: SECRET_KEY_BASE
-              valueFrom:
-                secretKeyRef:
-                  key: SECRET_KEY_BASE
-                  name: demoapp-env
+          envFrom:
+            - configMapRef:
+                name: demoapp-rails-env
+            - secretRef:
+                name: demoapp-rails-env
       restartPolicy: Never
   backoffLimit: 4
