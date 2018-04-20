@@ -24,24 +24,8 @@ spec:
           image: mysql:5.7.21
           ports:
             - containerPort: 3000
-          env:
-            - name: MYSQL_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  key: MYSQL_DATABASE
-                  name: demoapp-env
-            - name: MYSQL_USER
-              valueFrom:
-                configMapKeyRef:
-                  key: MYSQL_USER
-                  name: demoapp-env
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: MYSQL_ROOT_PASSWORD
-                  name: demoapp-env
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: MYSQL_PASSWORD
-                  name: demoapp-env
+          envFrom:
+            - configMapRef:
+                name: demoapp-mysql-env
+            - secretRef:
+                name: demoapp-mysql-env
