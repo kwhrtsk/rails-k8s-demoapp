@@ -29,12 +29,12 @@ spec:
             - ./bin/start-puma
           livenessProbe:
             httpGet:
-              path: /
+              path: /health_check/full
               port: 3000
             initialDelaySeconds: 30
           readinessProbe:
             httpGet:
-              path: /
+              path: /health_check/full
               port: 3000
             initialDelaySeconds: 30
           envFrom:
