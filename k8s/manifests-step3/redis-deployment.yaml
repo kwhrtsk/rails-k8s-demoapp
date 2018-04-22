@@ -28,10 +28,16 @@ spec:
           image: redis:4.0.9
           ports:
             - containerPort: 6379
+          livenessProbe:
+            tcpSocket:
+              port: 6379
+          readinessProbe:
+            tcpSocket:
+              port: 6379
           volumeMounts:
             - name: data
               mountPath: /data
-          args:
+          command:
             - redis-server
             - --appendonly
             - "yes"

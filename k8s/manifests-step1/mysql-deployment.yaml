@@ -24,6 +24,12 @@ spec:
           image: mysql:5.7.21
           ports:
             - containerPort: 3000
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+          readinessProbe:
+            tcpSocket:
+              port: 3306
           envFrom:
             - configMapRef:
                 name: demoapp-mysql-env

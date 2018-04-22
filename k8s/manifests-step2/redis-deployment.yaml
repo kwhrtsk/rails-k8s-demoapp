@@ -24,7 +24,13 @@ spec:
           image: redis:4.0.9
           ports:
             - containerPort: 6379
-          args:
+          livenessProbe:
+            tcpSocket:
+              port: 6379
+          readinessProbe:
+            tcpSocket:
+              port: 6379
+          command:
             - redis-server
             - --appendonly
             - "yes"
