@@ -38,6 +38,7 @@ open https://demoapp-puma.$(minikube ip).nip.io/
 
 # cleanup all objects
 cat *.yaml | kubectl delete -f -
+kubectl delete secret demoapp-puma-tls
 ```
 
 ## Migration
