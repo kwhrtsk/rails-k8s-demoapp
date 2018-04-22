@@ -2,15 +2,19 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: demoapp-setup
+  name: demoapp-migrate-db-0.0.2
 spec:
   template:
+    metadata:
+      labels:
+        app: demoapp
+        component: migrate-db
     spec:
       containers:
-        - name: setup
-          image: demoapp:0.0.1
+        - name: migrate-db
+          image: demoapp:0.0.2
           command:
-            - ./bin/setup-db
+            - ./bin/migrate-db
           envFrom:
             - configMapRef:
                 name: demoapp-rails-env
