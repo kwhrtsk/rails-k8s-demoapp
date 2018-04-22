@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demoapp-redis
+  labels:
+    app: demoapp
+    component: redis
+spec:
+  ports:
+    - protocol: TCP
+      port: 6379
+  selector:
+    app: demoapp
+    component: redis

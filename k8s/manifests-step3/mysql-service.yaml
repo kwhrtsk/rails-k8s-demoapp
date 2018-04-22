@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demoapp-mysql
+  labels:
+    app: demoapp
+    component: mysql
+spec:
+  ports:
+    - protocol: TCP
+      port: 3306
+  selector:
+    app: demoapp
+    component: mysql

@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoapp-redis
+  labels:
+    app: demoapp
+    component: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demoapp
+      component: redis
+  template:
+    metadata:
+      labels:
+        app: demoapp
+        component: redis
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: demoapp-redis
+      containers:
+        - name: redis
+          image: redis:4.0.9
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          args:
+            - redis-server
+            - --appendonly
+            - "yes"

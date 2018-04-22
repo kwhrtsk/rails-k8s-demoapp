@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoapp-sidekiq
+  labels:
+    app: demoapp
+    component: sidekiq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demoapp
+      component: sidekiq
+  template:
+    metadata:
+      labels:
+        app: demoapp
+        component: sidekiq
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: sidekiq
+          image: demoapp:0.0.1
+          imagePullPolicy: IfNotPresent
+          command:
+            - ./bin/start-sidekiq
+          envFrom:
+            - configMapRef:
+                name: demoapp-rails-env
+            - secretRef:
+                name: demoapp-rails-env
