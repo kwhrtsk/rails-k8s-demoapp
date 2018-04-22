@@ -32,6 +32,7 @@ $ brew link --force gettext
 cat *.yaml | kubectl apply -f -
 
 # open demoapp in browser
+# http
 open http://demoapp-puma.$(minikube ip).nip.io/
 # https
 open https://demoapp-puma.$(minikube ip).nip.io/
