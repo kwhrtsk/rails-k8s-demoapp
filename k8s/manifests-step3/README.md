@@ -28,13 +28,20 @@ cat *.yaml | kubectl delete -f -
 To execute `rake db:migrate`, run the following command:
 
 ```
-kubectl apply -f migrations/migrate-db-job-0.0.2.yaml
-```
+# Create new migration for example
+./bin/rails g migration AddLiksToMessage likes:integer
+./bin/rails db:migrate
 
-`0.0.2` means image tag.
-Create new manifest file when new migration has been created.
-Because `Job` object is immutable, so you cannot update manifest that alrady applied: `kubectl apply` will be failed.
-Also `kubectl patch` will be failed.
+# Build new image as demoapp:0.0.2
+cd k8s/minikube
+docker-build 0.0.2
+
+# Only update canary-release deployment that will execute rails db:migrate
+kubectl set image deploy/demoapp-puma-canary puma=demoapp:0.0.2
+
+# Update all other puma deployments that will not execute rails db:migrate
+kubectl set image deploy/demoapp-puma puma=demoapp:0.0.2
+```
 
 # Restrictions
 

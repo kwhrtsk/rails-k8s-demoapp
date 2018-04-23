@@ -2,13 +2,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demoapp-puma
+  name: demoapp-puma-canary
   labels:
     app: demoapp
     component: puma
-    track: stable
+    track: canary
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: demoapp
@@ -43,3 +43,6 @@ spec:
                 name: demoapp-rails-env
             - secretRef:
                 name: demoapp-rails-env
+          env:
+            - name: RAILS_DB_MIGRATE
+              value: "true"

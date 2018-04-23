@@ -1,4 +1,4 @@
 #!/bin/bash -x
 
-cat $(dirname $0)/*.yaml $(dirname $0)/migrations/*.yaml | kubectl delete -f -
+cat $(dirname $0)/*.yaml | kubectl delete -f -
 kubectl delete secret demoapp-puma-tls
