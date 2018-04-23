@@ -1,0 +1,24 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: demoapp-migrate-db-0.0.2
+spec:
+  template:
+    metadata:
+      labels:
+        app: demoapp
+        component: migrate-db
+    spec:
+      containers:
+        - name: migrate-db
+          image: demoapp:0.0.2
+          command:
+            - ./bin/migrate-db
+          envFrom:
+            - configMapRef:
+                name: demoapp-rails-env
+            - secretRef:
+                name: demoapp-rails-env
+      restartPolicy: Never
+  backoffLimit: 4

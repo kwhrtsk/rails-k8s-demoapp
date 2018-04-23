@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  MYSQL_HOST: mysql
+  REDIS_URL: redis://redis:6379/1
+  SECRET_KEY_BASE: "123"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sidekiq-dockerenv-rails
+  name: sidekiq-dockerenv-rails

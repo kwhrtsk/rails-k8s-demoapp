@@ -5,21 +5,17 @@ services:
     build:
       context: .
     env_file:
-      - .dockerenv/mysql
       - .dockerenv/rails
-    environment:
-      - RAILS_SERVE_STATIC_FILES=true
     ports:
       - 3000:3000
     depends_on:
       - mysql
       - redis
-    command: ./bin/start-puma
+    command: ./bin/setup-db-and-start-puma
 
   sidekiq:
     image: demoapp
     env_file:
-      - .dockerenv/mysql
       - .dockerenv/rails
     depends_on:
       - puma
@@ -29,8 +25,6 @@ services:
     image: mysql:5.7.21
     env_file:
       - .dockerenv/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=topsecret
 # uncomment to persist data
 #    volumes:
 #      - ./tmp/mysql:/var/lib/mysql

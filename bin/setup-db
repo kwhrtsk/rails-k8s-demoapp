@@ -3,4 +3,4 @@
 cd $(dirname $0)/..
 
 ./bin/wait-for $MYSQL_HOST 3306
-./bin/pumactl start
+./bin/rails db:setup_if_not_yet

@@ -13,6 +13,9 @@ gem 'webpacker', '~> 3.4'
 gem 'sidekiq', '~> 5.1.2'
 gem 'slim-rails', '~> 3.1.3'
 gem 'active_link_to', '~> 1.0.5'
+gem 'health_check', '~> 3.0'
+gem 'lograge'
+gem 'logstash-event'
 gem 'bootstrap_form',
   git: 'https://github.com/bootstrap-ruby/bootstrap_form.git',
   branch: "master"

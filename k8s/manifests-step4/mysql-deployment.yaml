@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoapp-mysql
+  labels:
+    app: demoapp
+    component: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demoapp
+      component: mysql
+  template:
+    metadata:
+      labels:
+        app: demoapp
+        component: mysql
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: demoapp-mysql
+      containers:
+        - name: mysql
+          image: mysql:5.7.21
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+          readinessProbe:
+            tcpSocket:
+              port: 3306
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+          envFrom:
+            - configMapRef:
+                name: demoapp-mysql-env
+            - secretRef:
+                name: demoapp-mysql-env

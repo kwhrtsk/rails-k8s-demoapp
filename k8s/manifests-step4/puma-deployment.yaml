@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoapp-puma
+  labels:
+    app: demoapp
+    component: puma
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demoapp
+      component: puma
+  template:
+    metadata:
+      labels:
+        app: demoapp
+        component: puma
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: puma
+          image: demoapp:0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          command:
+            - ./bin/start-puma
+          livenessProbe:
+            httpGet:
+              path: /health_check/full
+              port: 3000
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /health_check/full
+              port: 3000
+            initialDelaySeconds: 30
+          envFrom:
+            - configMapRef:
+                name: demoapp-rails-env
+            - secretRef:
+                name: demoapp-rails-env

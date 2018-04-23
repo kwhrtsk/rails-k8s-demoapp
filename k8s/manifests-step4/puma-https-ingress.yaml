@@ -1,0 +1,11 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: demoapp-puma-https
+spec:
+  tls:
+    - secretName: demoapp-puma-tls
+  backend:
+    serviceName: demoapp-puma
+    servicePort: 3000

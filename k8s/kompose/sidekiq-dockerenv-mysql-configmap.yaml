@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  MYSQL_DATABASE: demoapp_production
+  MYSQL_PASSWORD: secret
+  MYSQL_USER: demoapp
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sidekiq-dockerenv-mysql
+  name: sidekiq-dockerenv-mysql

@@ -1,0 +1,15 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: demoapp-puma-http
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: "demoapp-puma.${MINIKUBE_IP}.nip.io"
+    http:
+      paths:
+        - backend:
+            serviceName: demoapp-puma
+            servicePort: 3000
