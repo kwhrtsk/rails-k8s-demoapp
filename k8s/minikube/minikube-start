@@ -1,4 +1,0 @@
-#!/bin/bash -xe
-
-minikube start --cpus=3 --memory=2048 --vm-driver=hyperkit --disk-size=12g
-minikube addons enable ingress

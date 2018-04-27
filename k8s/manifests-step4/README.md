@@ -26,7 +26,13 @@ $ brew link --force gettext
 # this commands will generate self signed server certificate and key: server.pem, server.key
 # key and cert are stored in Secret object named `demoapp-puma-tls`.
 # you can confirm this object by `kubectl describe secret demoapp-puma-tls`
-./kubectl-create-secret-tls
+export MINIKUBE_IP=$(minikube ip)
+export COMMON_NAME=demoapp-puma.${MINIKUBE_IP}.nip.io
+openssl req -new -x509 -nodes -keyout server.key -days 3650 \
+  -subj "/CN=${COMMON_NAME}" \
+  -extensions v3_req \
+  -config <(cat openssl.conf | envsubst '$COMMON_NAME') > server.pem
+kubectl create secret tls demoapp-puma-tls --key server.key --cert server.pem
 
 # setup all objects
 cat *.yaml | kubectl apply -f -
@@ -40,6 +46,15 @@ open https://demoapp-puma.$(minikube ip).nip.io/
 # cleanup all objects
 cat *.yaml | kubectl delete -f -
 kubectl delete secret demoapp-puma-tls
+```
+
+See also [Makefile](Makefile). There are shorthand tasks for the above operations.
+
+```
+make kubectl-create-secret-tls
+make kubectl-apply
+make open
+make kubectl-delete
 ```
 
 ## Migration

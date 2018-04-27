@@ -21,6 +21,14 @@ minikube service demoapp-puma
 cat *.yaml | kubectl delete -f -
 ```
 
+See also [Makefile](Makefile). There are shorthand tasks for the above operations.
+
+```
+make kubectl-apply
+make minikube-service
+make kubectl-delete
+```
+
 # Restrictions
 
 * `puma` deployment has Only 1 replicas to avoid conflicts `rake db:setup` from multiple puma containers from `./bin/setup-and-start-puma`.

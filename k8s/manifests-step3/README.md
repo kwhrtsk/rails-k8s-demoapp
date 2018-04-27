@@ -23,6 +23,14 @@ minikube service demoapp-puma
 cat *.yaml | kubectl delete -f -
 ```
 
+See also [Makefile](Makefile). There are shorthand tasks for the above operations.
+
+```
+make kubectl-apply
+make minikube-service
+make kubectl-delete
+```
+
 ## Migration
 
 To execute `rake db:migrate`, run the following command:
