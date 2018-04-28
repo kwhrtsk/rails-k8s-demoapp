@@ -1,3 +1,5 @@
+SHELL = /bin/bash
+
 all:
 	$(MAKE) minikube-docker-build
 	$(MAKE) kubectl-apply

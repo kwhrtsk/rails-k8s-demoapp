@@ -1,3 +1,5 @@
+SHELL = /bin/bash
+
 ifeq ($(TAG),)
 	tag := 0.0.1
 else
