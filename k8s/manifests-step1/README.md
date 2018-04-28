@@ -14,11 +14,23 @@ Sample manifest using these API objects:
 # setup all objects
 cat *.yaml | kubectl apply -f -
 
+# wait until the deployment is completed
+kubectl rollout status deploy demoapp-puma
+
 # open demoapp in browser
 minikube service demoapp-puma
 
 # cleanup all objects
 cat *.yaml | kubectl delete -f -
+```
+
+See also [Makefile](Makefile). There are shorthand tasks for the above operations.
+
+```
+make kubectl-apply
+make kubectl-rollout-status
+make minikube-service
+make kubectl-delete
 ```
 
 # Restrictions
