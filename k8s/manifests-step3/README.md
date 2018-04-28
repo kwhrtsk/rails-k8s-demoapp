@@ -16,6 +16,9 @@ Sample manifest using these API objects:
 # setup all objects
 cat *.yaml | kubectl apply -f -
 
+# wait until the deployment is completed
+kubectl rollout status deploy demoapp-puma
+
 # open demoapp in browser
 minikube service demoapp-puma
 
@@ -27,6 +30,7 @@ See also [Makefile](Makefile). There are shorthand tasks for the above operation
 
 ```
 make kubectl-apply
+make kubectl-rollout-status
 make minikube-service
 make kubectl-delete
 ```
@@ -56,8 +60,14 @@ eval $(minikube docker-env) && docker build . -t demoapp:0.0.2
 # Only update canary-release deployment that will execute rails db:migrate
 kubectl set image deploy/demoapp-puma-canary puma=demoapp:0.0.2
 
+# wait until the canary-deployment is completed
+kubectl rollout status deploy demoapp-puma-canary
+
 # Update all other puma deployments that will not execute rails db:migrate
 kubectl set image deploy/demoapp-puma puma=demoapp:0.0.2
+
+# wait until the deployment is completed
+kubectl rollout status deploy demoapp-puma
 ```
 
 See also [Makefile](Makefile). There are shorthand tasks for the above operations.

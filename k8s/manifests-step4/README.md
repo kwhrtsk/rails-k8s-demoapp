@@ -37,6 +37,9 @@ kubectl create secret tls demoapp-puma-tls --key server.key --cert server.pem
 # setup all objects
 cat *.yaml | envsubst '$MINIKUBE_IP' | kubectl apply -f -
 
+# wait until the deployment is completed
+kubectl rollout status deploy demoapp-puma
+
 # open demoapp in browser
 # http
 open http://demoapp-puma.$(minikube ip).nip.io/
@@ -53,6 +56,7 @@ See also [Makefile](Makefile). There are shorthand tasks for the above operation
 ```
 make kubectl-create-secret-tls
 make kubectl-apply
+make kubectl-rollout-status
 make open
 make kubectl-delete
 ```
@@ -82,8 +86,14 @@ eval $(minikube docker-env) && docker build . -t demoapp:0.0.2
 # Only update canary-release deployment that will execute rails db:migrate
 kubectl set image deploy/demoapp-puma-canary puma=demoapp:0.0.2
 
+# wait until the canary-deployment is completed
+kubectl rollout status deploy demoapp-puma-canary
+
 # Update all other puma deployments that will not execute rails db:migrate
 kubectl set image deploy/demoapp-puma puma=demoapp:0.0.2
+
+# wait until the deployment is completed
+kubectl rollout status deploy demoapp-puma
 ```
 
 See also [Makefile](Makefile). There are shorthand tasks for the above operations.
@@ -93,3 +103,4 @@ make TAG=0.0.2 minikube-docker-build
 make TAG=0.0.2 canary-deploy
 make TAG=0.0.2 deploy
 ```
+
