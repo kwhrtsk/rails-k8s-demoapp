@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: demoapp-puma-https
+  name: demoapp-puma
 spec:
   tls:
     - secretName: demoapp-puma-tls

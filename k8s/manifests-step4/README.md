@@ -41,9 +41,6 @@ cat *.yaml | envsubst '$MINIKUBE_IP' | kubectl apply -f -
 kubectl rollout status deploy demoapp-puma
 
 # open demoapp in browser
-# http
-open http://demoapp-puma.$(minikube ip).nip.io/
-# https
 open https://demoapp-puma.$(minikube ip).nip.io/
 
 # cleanup all objects

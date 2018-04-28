@@ -61,7 +61,6 @@ kubectl-create-secret-tls: server.pem
 	kubectl create secret tls demoapp-puma-tls --key server.key --cert server.pem
 
 open:
-	open http://$(COMMON_NAME)
 	open https://$(COMMON_NAME)
 
 stern:
