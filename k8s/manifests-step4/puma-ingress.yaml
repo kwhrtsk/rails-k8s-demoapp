@@ -3,9 +3,23 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: demoapp-puma
+  annotations:
+    #ingress.kubernetes.io/rewrite-target: /
+    #ingress.kubernetes.io/ssl-redirect: "false"
+    #kubernetes.io/ingress.class: "nginx"
+    #nginx.org/ssl-services: "demoapp-puma"
+    #kubernetes.io/tls-acme: 'true'
+    kubernetes.io/ingress.global-static-ip-name: rails-k8s-demoapp
+    kubernetes.io/ingress.allow-http: "false"
 spec:
   tls:
-    - secretName: demoapp-puma-tls
-  backend:
-    serviceName: demoapp-puma
-    servicePort: 3000
+  - hosts:
+    - demoapp-puma.${MINIKUBE_IP}.nip.io
+    secretName: demoapp-puma-tls
+  rules:
+  - host: demoapp-puma.${MINIKUBE_IP}.nip.io
+    http:
+      paths:
+      - backend:
+          serviceName: demoapp-puma
+          servicePort: 3000
