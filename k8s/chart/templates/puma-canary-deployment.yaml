@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "demoapp.puma-canary.name" . }}
+  labels:
+    app: {{ template "demoapp.name" . }}
+    chart: {{ template "demoapp.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: puma
+    track: canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "demoapp.name" . }}
+      release: {{ .Release.Name }}
+      component: puma
+  template:
+    metadata:
+      labels:
+        app: {{ template "demoapp.name" . }}
+        release: {{ .Release.Name }}
+        component: puma
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: puma
+          image: {{ .Values.rails.image.repository }}:{{ .Values.rails.image.canaryTag }}
+          imagePullPolicy: IfNotPresent
+          command:
+            - ./bin/start-puma
+          livenessProbe:
+            httpGet:
+              path: /health_check/full
+              port: 3000
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /health_check/full
+              port: 3000
+            initialDelaySeconds: 30
+          envFrom:
+            - configMapRef:
+                name: {{ template "demoapp.rails-env.name" . }}
+            - secretRef:
+                name: {{ template "demoapp.rails-env.name" . }}
+          env:
+            - name: RAILS_DB_MIGRATE
+              value: "true"

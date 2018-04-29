@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "demoapp.redis.name" . }}
+  labels:
+    app: {{ template "demoapp.name" . }}
+    chart: {{ template "demoapp.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "demoapp.name" . }}
+      release: {{ .Release.Name }}
+      component: redis
+  template:
+    metadata:
+      labels:
+        app: {{ template "demoapp.name" . }}
+        release: {{ .Release.Name }}
+        component: redis
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ template "demoapp.redis.name" . }}
+      containers:
+        - name: redis
+          image: {{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}
+          livenessProbe:
+            tcpSocket:
+              port: 6379
+          readinessProbe:
+            tcpSocket:
+              port: 6379
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          command:
+            - redis-server
+            - --appendonly
+            - "yes"

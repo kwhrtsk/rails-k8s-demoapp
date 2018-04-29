@@ -30,3 +30,31 @@ Create chart name and version as used by the chart label.
 {{- define "demoapp.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{/*
+Shorthand for component names
+*/}}
+{{- define "demoapp.mysql.name" -}}
+{{- include "demoapp.fullname" . -}}-mysql
+{{- end -}}
+{{- define "demoapp.redis.name" -}}
+{{- include "demoapp.fullname" . -}}-redis
+{{- end -}}
+{{- define "demoapp.puma.name" -}}
+{{- include "demoapp.fullname" . -}}-puma
+{{- end -}}
+{{- define "demoapp.puma-canary.name" -}}
+{{- include "demoapp.fullname" . -}}-puma-canary
+{{- end -}}
+{{- define "demoapp.sidekiq.name" -}}
+{{- include "demoapp.fullname" . -}}-sidekiq
+{{- end -}}
+{{- define "demoapp.rails-env.name" -}}
+{{- include "demoapp.fullname" . -}}-rails-env
+{{- end -}}
+{{- define "demoapp.mysql-env.name" -}}
+{{- include "demoapp.fullname" . -}}-mysql-env
+{{- end -}}
+{{- define "demoapp.setup-db.name" -}}
+{{- include "demoapp.fullname" . -}}-setup-db
+{{- end -}}
