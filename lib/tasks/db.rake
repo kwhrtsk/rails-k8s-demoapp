@@ -39,7 +39,7 @@ namespace :db do
     begin
       Rake::Task["db:migrate"].invoke
     rescue ActiveRecord::ConcurrentMigrationError => e
-      Rails.logger.info e.message
+      Rails.logger.info "Skip migrations because another migration process is currently running."
     end
   end
 end
