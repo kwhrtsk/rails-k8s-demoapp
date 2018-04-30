@@ -1,4 +1,5 @@
 namespace :db do
+  desc "Invoke db:setup task only if the task has never been invoked yet."
   task setup_if_not_yet: [:environment] do
     begin
       if !ActiveRecord::SchemaMigration.table_exists?
@@ -13,6 +14,7 @@ namespace :db do
     end
   end
 
+  desc "Wait for db:setup task to complete."
   task wait_for_setup_completion: [:environment] do
     loop do
       begin
@@ -32,6 +34,7 @@ namespace :db do
     end
   end
 
+  desc "Invoke db:migrate task and ignore errors caused by parallel execution."
   task try_migrate: [:wait_for_setup_completion] do
     begin
       Rake::Task["db:migrate"].invoke
