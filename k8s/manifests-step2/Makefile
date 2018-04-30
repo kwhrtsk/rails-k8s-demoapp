@@ -16,7 +16,6 @@ clean: kubectl-delete
 
 update: 
 	$(MAKE) TAG=$(tag) minikube-docker-build
-	$(MAKE) TAG=$(tag) canary-deploy
 	$(MAKE) TAG=$(tag) deploy
 
 minikube-docker-build:
@@ -36,10 +35,6 @@ minikube-service:
 
 kubectl-delete:
 	cat *.yaml | kubectl delete -f -
-
-canary-deploy:
-	kubectl set image deploy/demoapp-puma-canary puma=demoapp:$(tag)
-	kubectl rollout status deploy demoapp-puma-canary
 
 deploy:
 	kubectl set image deploy/demoapp-puma puma=demoapp:$(tag)

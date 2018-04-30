@@ -51,7 +51,7 @@ make helm-delete
 make helm-reset
 ```
 
-## Migration
+## Deploy new rails image includes migration
 
 For example, when you create new migration like this:
 
@@ -64,7 +64,7 @@ cd ../../
 ./bin/rails db:migrate
 ```
 
-To execute `rake db:migrate` on k8s, run the following commands:
+To build new rails image, deploy, and execute `rake db:migrate` on k8s, run the following commands:
 
 ```
 # Move to RAILS_ROOT
@@ -73,26 +73,22 @@ cd ../../
 # Build new image as demoapp:0.0.2
 eval $(minikube docker-env) && docker build . -t demoapp:0.0.2
 
-# Only update canary-release deployment that will execute rails db:migrate
-# and wait until the canary-deployment is completed
-helm upgrade staging . --install --wait \
-  --set ingress.host=${COMMON_NAME} \
-  --set rails.image.canaryTag=0.0.2
-
-# Update all other puma deployments that will not execute rails db:migrate
+# Update all puma deployments. Only one of them will execute rails db:migrate.
 # and wait until the deployment is completed
 kubectl set image deploy/demoapp-puma puma=demoapp:0.0.2
 helm upgrade staging . --install --wait \
   --set ingress.host=${COMMON_NAME} \
-  --set rails.image.canaryTag=0.0.2 \
   --set rails.image.tag=0.0.2
 ```
+
+Rails's migration is exclusive controlled by RDBMS's lock system at least when executed on MySQL or PostgreSQL.
+So to execute `rails db:migrate` safely, all you need is just ignore `ActiveRecord::ConcurrentMigrationError`.
+Please refer to [bin/start-puma](/bin/start-puma) and [db:try_migrate](/lib/tasks/db.rake) for details.
 
 See also [Makefile](Makefile). There are shorthand tasks for the above operations.
 
 ```
 make TAG=0.0.2 minikube-docker-build
-make TAG=0.0.2 canary-deploy
 make TAG=0.0.2 deploy
 ```
 
