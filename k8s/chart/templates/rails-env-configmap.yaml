@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "demoapp.rails-env.name" . }}
+data:
+  RAILS_SERVE_STATIC_FILES: {{ .Values.rails.railsServeStaticFiles | quote }}
+  RAILS_LOG_TO_STDOUT: {{ .Values.rails.railsLogToStdout | quote }} 
+  MYSQL_HOST: {{ template "demoapp.mysql.name" . }}
+  MYSQL_USER: {{ .Values.mysql.user }}
+  MYSQL_DATABASE: {{ .Values.mysql.database }}
+  REDIS_URL: redis://{{ template "demoapp.redis.name" . }}:6379/1

@@ -2,30 +2,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demoapp-redis
+  name: {{ template "demoapp.redis.name" . }}
   labels:
-    app: demoapp
+    app: {{ template "demoapp.name" . }}
+    chart: {{ template "demoapp.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
     component: redis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: demoapp
+      app: {{ template "demoapp.name" . }}
+      release: {{ .Release.Name }}
       component: redis
   template:
     metadata:
       labels:
-        app: demoapp
+        app: {{ template "demoapp.name" . }}
+        release: {{ .Release.Name }}
         component: redis
     spec:
       restartPolicy: Always
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: demoapp-redis
+            claimName: {{ template "demoapp.redis.name" . }}
       containers:
         - name: redis
-          image: redis:4.0.9
+          image: {{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}
           livenessProbe:
             tcpSocket:
               port: 6379

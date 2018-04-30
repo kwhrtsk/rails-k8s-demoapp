@@ -22,8 +22,6 @@ spec:
       containers:
         - name: mysql
           image: mysql:5.7.21
-          ports:
-            - containerPort: 3000
           livenessProbe:
             tcpSocket:
               port: 3306

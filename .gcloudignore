@@ -1,0 +1,8 @@
+/.git
+/log
+/node_modules
+/public/packs
+/public/packs-test
+/tmp
+/vendor/bundle
+/config/master.key

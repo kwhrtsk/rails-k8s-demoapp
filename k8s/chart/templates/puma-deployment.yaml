@@ -2,29 +2,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demoapp-puma
+  name: {{ template "demoapp.puma.name" . }}
   labels:
-    app: demoapp
+    app: {{ template "demoapp.name" . }}
+    chart: {{ template "demoapp.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
     component: puma
+    track: stable
 spec:
-  replicas: 1
+  replicas: {{ .Values.puma.replicas }}
   selector:
     matchLabels:
-      app: demoapp
+      app: {{ template "demoapp.name" . }}
+      release: {{ .Release.Name }}
       component: puma
   template:
     metadata:
       labels:
-        app: demoapp
+        app: {{ template "demoapp.name" . }}
+        release: {{ .Release.Name }}
         component: puma
     spec:
       restartPolicy: Always
       containers:
         - name: puma
-          image: demoapp:0.0.1
+          image: {{ .Values.rails.image.repository }}:{{ .Values.rails.image.tag }}
           imagePullPolicy: IfNotPresent
           command:
-            - ./bin/setup-db-and-start-puma
+            - ./bin/start-puma
           livenessProbe:
             httpGet:
               path: /health_check/full
@@ -37,6 +43,6 @@ spec:
             initialDelaySeconds: 30
           envFrom:
             - configMapRef:
-                name: demoapp-rails-env
+                name: {{ template "demoapp.rails-env.name" . }}
             - secretRef:
-                name: demoapp-rails-env
+                name: {{ template "demoapp.rails-env.name" . }}

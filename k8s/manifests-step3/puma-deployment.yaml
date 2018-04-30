@@ -24,8 +24,6 @@ spec:
         - name: puma
           image: demoapp:0.0.1
           imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 3000
           command:
             - ./bin/start-puma
           livenessProbe:

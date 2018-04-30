@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "demoapp.redis.name" . }}
+  labels:
+    app: {{ template "demoapp.name" . }}
+    chart: {{ template "demoapp.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: redis
+spec:
+  ports:
+    - protocol: TCP
+      port: 6379
+  selector:
+    app: {{ template "demoapp.name" . }}
+    release: {{ .Release.Name }}
+    component: redis

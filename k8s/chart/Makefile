@@ -9,13 +9,22 @@ else
 	tag := $(TAG)
 endif
 
+ifeq ($(RELEASE),)
+	release := staging
+else
+	release := $(RELEASE)
+endif
+
 all:
+	$(MAKE) helm-init
 	$(MAKE) minikube-docker-build
-	$(MAKE) kubectl-apply
-	$(MAKE) kubectl-rollout-status
+	$(MAKE) kubectl-create-secret-tls
+	$(MAKE) helm-upgrade
 	$(MAKE) open
 
-clean: kubectl-delete
+clean:
+	$(MAKE) helm-delete
+	$(MAKE) helm-reset
 
 update: 
 	$(MAKE) TAG=$(tag) minikube-docker-build
@@ -28,26 +37,24 @@ minikube-docker-build:
 			docker build ../../ -t demoapp:$(tag); \
 		fi
 
-kubectl-apply: kubectl-create-secret-tls
-	cat *.yaml | envsubst '$$MINIKUBE_IP' | kubectl apply -f -
+helm-init:
+	helm init --wait
 
-kubectl-rollout-status:
-	kubectl rollout status deploy demoapp-puma
+helm-reset:
+	helm reset
 
-minikube-service:
-	minikube service demoapp-puma
+helm-upgrade:
+	helm upgrade $(release) . --install --wait --set ingress.host=$(COMMON_NAME)
 
-kubectl-delete:
-	cat *.yaml | kubectl delete -f - --ignore-not-found
+helm-delete:
+	helm delete $(release) --purge
 	kubectl delete secret demoapp-puma-tls
 
 canary-deploy:
-	kubectl set image deploy/demoapp-puma-canary puma=demoapp:$(tag)
-	kubectl rollout status deploy demoapp-puma-canary
+	helm upgrade $(release) . --install --wait --set ingress.host=$(COMMON_NAME) --set rails.image.canaryTag=$(TAG)
 
 deploy:
-	kubectl set image deploy/demoapp-puma puma=demoapp:$(tag)
-	kubectl rollout status deploy demoapp-puma
+	helm upgrade $(release) . --install --wait --set ingress.host=$(COMMON_NAME) --set rails.image.canaryTag=$(TAG) --set rails.image.tag=$(TAG)
 
 server.pem:
 	openssl req -new -x509 -nodes -keyout server.key -days 3650 \

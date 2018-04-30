@@ -1,25 +1,16 @@
-k8s step4
-=========
+Helm Chart
+==========
 
-Sample manifest using these API objects:
-
-* Deployment
-* Service
-* ConfigMap
-* Secret
-* Job
-* PersistentVolumeClaim
-* Ingress `<- New!`
+Sample helm chart based on [step4 manifests](../manifests-step4/).
 
 # Requirements
 
-* envsubst
+* helm
 ```
-brew install gettext
-brew link --force gettext
+brew install kubernetes-helm
 ```
 
-# Usage
+# Getting started with minikube
 
 ```
 # setup secret for TLS certificates
@@ -34,28 +25,30 @@ openssl req -new -x509 -nodes -keyout server.key -days 3650 \
   -config <(cat openssl.conf | envsubst '$COMMON_NAME') > server.pem
 kubectl create secret tls demoapp-puma-tls --key server.key --cert server.pem
 
-# setup all objects
-cat *.yaml | envsubst '$MINIKUBE_IP' | kubectl apply -f -
+# setup helm's server module a.k.a Tiller
+helm init --wait
 
-# wait until the deployment is completed
-kubectl rollout status deploy demoapp-puma
+# install all objects by helm chart and wait until the deployment complete
+helm upgrade staging . --install --wait --set ingress.host=${COMMON_NAME}
 
 # open demoapp in browser
 open https://demoapp-puma.$(minikube ip).nip.io/
 
 # cleanup all objects
-cat *.yaml | kubectl delete -f -
-kubectl delete secret demoapp-puma-tls
+helm delete staging --purge
+
+# uninstall Tiller
+helm reset
 ```
 
 See also [Makefile](Makefile). There are shorthand tasks for the above operations.
 
 ```
 make kubectl-create-secret-tls
-make kubectl-apply
-make kubectl-rollout-status
+make helm-upgrade
 make open
-make kubectl-delete
+make helm-delete
+make helm-reset
 ```
 
 ## Migration
@@ -81,16 +74,18 @@ cd ../../
 eval $(minikube docker-env) && docker build . -t demoapp:0.0.2
 
 # Only update canary-release deployment that will execute rails db:migrate
-kubectl set image deploy/demoapp-puma-canary puma=demoapp:0.0.2
-
-# wait until the canary-deployment is completed
-kubectl rollout status deploy demoapp-puma-canary
+# and wait until the canary-deployment is completed
+helm upgrade staging . --install --wait \
+  --set ingress.host=${COMMON_NAME} \
+  --set rails.image.canaryTag=0.0.2
 
 # Update all other puma deployments that will not execute rails db:migrate
+# and wait until the deployment is completed
 kubectl set image deploy/demoapp-puma puma=demoapp:0.0.2
-
-# wait until the deployment is completed
-kubectl rollout status deploy demoapp-puma
+helm upgrade staging . --install --wait \
+  --set ingress.host=${COMMON_NAME} \
+  --set rails.image.canaryTag=0.0.2 \
+  --set rails.image.tag=0.0.2
 ```
 
 See also [Makefile](Makefile). There are shorthand tasks for the above operations.
@@ -101,3 +96,4 @@ make TAG=0.0.2 canary-deploy
 make TAG=0.0.2 deploy
 ```
 
+To reduce `--set` parameter, update your values.yaml.

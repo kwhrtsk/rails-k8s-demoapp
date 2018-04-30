@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "demoapp.sidekiq.name" . }}
+  labels:
+    app: {{ template "demoapp.name" . }}
+    chart: {{ template "demoapp.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: sidekiq
+spec:
+  replicas: {{ .Values.sidekiq.replicas }}
+  selector:
+    matchLabels:
+      app: {{ template "demoapp.name" . }}
+      release: {{ .Release.Name }}
+      component: sidekiq
+  template:
+    metadata:
+      labels:
+        app: {{ template "demoapp.name" . }}
+        release: {{ .Release.Name }}
+        component: sidekiq
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: sidekiq
+          image: {{ .Values.rails.image.repository }}:{{ .Values.rails.image.tag }}
+          imagePullPolicy: IfNotPresent
+          command:
+            - ./bin/start-sidekiq
+          envFrom:
+            - configMapRef:
+                name: {{ template "demoapp.rails-env.name" . }}
+            - secretRef:
+                name: {{ template "demoapp.rails-env.name" . }}
