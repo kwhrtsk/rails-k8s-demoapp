@@ -28,7 +28,6 @@ clean:
 
 update: 
 	$(MAKE) TAG=$(tag) minikube-docker-build
-	$(MAKE) TAG=$(tag) canary-deploy
 	$(MAKE) TAG=$(tag) deploy
 
 minikube-docker-build:
@@ -50,11 +49,8 @@ helm-delete:
 	helm delete $(release) --purge
 	kubectl delete secret demoapp-puma-tls
 
-canary-deploy:
-	helm upgrade $(release) . --install --wait --set ingress.host=$(COMMON_NAME) --set rails.image.canaryTag=$(TAG)
-
 deploy:
-	helm upgrade $(release) . --install --wait --set ingress.host=$(COMMON_NAME) --set rails.image.canaryTag=$(TAG) --set rails.image.tag=$(TAG)
+	helm upgrade $(release) . --install --wait --set ingress.host=$(COMMON_NAME) --set rails.image.tag=$(TAG)
 
 server.pem:
 	openssl req -new -x509 -nodes -keyout server.key -days 3650 \

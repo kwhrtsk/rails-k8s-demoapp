@@ -28,7 +28,6 @@ rails:
   image:
     repository: demoapp
     tag: 0.0.1
-    canaryTag: 0.0.1
     setupDbTag: 0.0.1
   railsServeStaticFiles: "true"
   railsLogToStdout: "true"

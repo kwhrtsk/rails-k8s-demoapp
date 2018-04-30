@@ -43,9 +43,6 @@ Shorthand for component names
 {{- define "demoapp.puma.name" -}}
 {{- include "demoapp.fullname" . -}}-puma
 {{- end -}}
-{{- define "demoapp.puma-canary.name" -}}
-{{- include "demoapp.fullname" . -}}-puma-canary
-{{- end -}}
 {{- define "demoapp.sidekiq.name" -}}
 {{- include "demoapp.fullname" . -}}-sidekiq
 {{- end -}}
