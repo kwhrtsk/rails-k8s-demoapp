@@ -10,7 +10,6 @@ metadata:
     heritage: {{ .Release.Service }}
     component: puma
 spec:
-  tpe: NodePort
   ports:
     - protocol: TCP
       port: 3000

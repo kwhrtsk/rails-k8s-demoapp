@@ -7,7 +7,6 @@ metadata:
     app: demoapp
     component: puma
 spec:
-  type: NodePort
   ports:
     - protocol: TCP
       port: 3000
