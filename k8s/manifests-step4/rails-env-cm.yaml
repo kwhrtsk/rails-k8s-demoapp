@@ -9,4 +9,5 @@ data:
   MYSQL_HOST: demoapp-mysql
   MYSQL_USER: demoapp
   MYSQL_DATABASE: demoapp_production
+  REDIS_HOST: demoapp-redis
   REDIS_URL: redis://demoapp-redis:6379/1

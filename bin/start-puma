@@ -3,5 +3,6 @@
 cd $(dirname $0)/..
 
 ./bin/wait-for $MYSQL_HOST 3306
+./bin/wait-for $REDIS_HOST 6379
 ./bin/rails db:try_migrate
 ./bin/pumactl start

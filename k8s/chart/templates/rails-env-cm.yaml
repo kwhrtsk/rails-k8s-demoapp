@@ -9,4 +9,5 @@ data:
   MYSQL_HOST: {{ template "demoapp.mysql.name" . }}
   MYSQL_USER: {{ .Values.mysql.user }}
   MYSQL_DATABASE: {{ .Values.mysql.database }}
+  REDIS_HOST: {{ template "demoapp.redis.name" . }}
   REDIS_URL: redis://{{ template "demoapp.redis.name" . }}:6379/1

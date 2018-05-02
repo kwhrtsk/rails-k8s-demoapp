@@ -5,4 +5,5 @@ MYSQL_HOST=mysql
 MYSQL_USER=demoapp
 MYSQL_PASSWORD=secret
 MYSQL_DATABASE=demoapp_production
+REDIS_HOST=redis
 REDIS_URL=redis://redis:6379/1
