@@ -1,9 +1,9 @@
-Demo for Docker/Kubernetes with Rails
-=====================================
+Sample application for Docker/Kubernetes/Helm with Rails
+========================================================
 
 **WIP**
 
-Minimal sample application to demonstrate Rails application development with Docker and Kubernetes.
+Minimal sample application to demonstrate Rails application development with Docker, Kubernetes and Helm.
 
 # Start preview mode with Docker Compose
 
@@ -67,7 +67,7 @@ Tested with:
 | hyperkit     | v0.20171204-60-g0e5b6b |
 | stern        | 1.6.0                  |
 
-## Deploy on Kubernetes cluster with plain YAML manifest files
+## Deploy to Kubernetes cluster with plain YAML manifest files
 
 Example manifests to deploy to minikube instance.
 
@@ -81,7 +81,7 @@ Example manifests to deploy to minikube instance.
 * [step4](k8s/manifests-step4/)
   * Add `Ingress` from step3's constitution to expose application with custom TLS certificate and fixed URL.
 
-## Helm Chart and operation examples
+## Deploy to Kubernetes cluster with Helm Chart
 
 [Helm Chart](k8s/chart/) example and operation scripts for setup, deploy, and rolling update rails containers.
 This chart based on [manifests-step4](k8s/manifests-step4/).
