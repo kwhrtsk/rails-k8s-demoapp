@@ -6,10 +6,20 @@ else
 	tag := $(TAG)
 endif
 
+ifeq ($(VM_DRIVER),)
+	vm_driver := hyperkit
+else
+	vm_driver := $(VM_DRIVER)
+endif
+
 .PHONY: *
 
+all: minikube-start
+
+clean: minikube-delete
+
 minikube-start:
-	minikube start --cpus=3 --memory=2048 --vm-driver=hyperkit --disk-size=12g
+	minikube start --cpus=3 --memory=2048 --vm-driver=$(vm_driver) --disk-size=12g
 	minikube addons enable ingress
 
 minikube-delete:
