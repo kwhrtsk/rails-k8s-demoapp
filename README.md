@@ -18,7 +18,11 @@ $ cd rails-k8s-demoapp
 # Start mysql and redis container, and build rails app image and start.
 $ docker-compose -f docker-compose-preview.yml up -d
 
+# Open top page in your browser
 $ open http://localhost:3000/
+
+# Stop all containers and cleanup volumes
+$ docker-compose -f docker-compose-preview.yml down
 ```
 
 # Start local server processes with MySQL and Redis on Docker Compose
@@ -55,13 +59,13 @@ $ open http://localhost:3000/
 
 Tested with:
 
-| 名前         | バージョン            |
-| ------------ | --------------------- |
-| minikube     | 0.26.1 (k8s 1.10.0)   |
-| kubectl      | 1.10.1                |
-| helm         | 2.8.2                 |
-| virtualbox   | 5.2.8                 |
-| stern        | 1.6.0                 |
+| Name         | Version                |
+| ------------ | ---------------------- |
+| minikube     | 0.26.1 (k8s 1.10.0)    |
+| kubectl      | 1.10.1                 |
+| helm         | 2.8.2                  |
+| hyperkit     | v0.20171204-60-g0e5b6b |
+| stern        | 1.6.0                  |
 
 ## Deploy on Kubernetes cluster with plain YAML manifest files
 
