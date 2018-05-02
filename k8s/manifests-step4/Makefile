@@ -16,6 +16,7 @@ all:
 	$(MAKE) open
 
 clean: kubectl-delete
+	rm -f server.pem server.key
 
 update: 
 	$(MAKE) TAG=$(tag) minikube-docker-build
@@ -38,7 +39,7 @@ minikube-service:
 
 kubectl-delete:
 	cat *.yaml | kubectl delete -f - --ignore-not-found
-	kubectl delete secret demoapp-puma-tls
+	kubectl delete secret demoapp-puma-tls --ignore-not-found
 
 deploy:
 	kubectl set image deploy/demoapp-puma puma=demoapp:$(tag)

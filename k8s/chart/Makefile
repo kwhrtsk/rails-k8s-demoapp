@@ -23,6 +23,7 @@ all:
 	$(MAKE) open
 
 clean:
+	rm -f server.pem server.key
 	$(MAKE) helm-delete
 	$(MAKE) helm-reset
 
