@@ -25,6 +25,11 @@ spec:
           imagePullPolicy: IfNotPresent
           command:
             - ./bin/start-sidekiq
+          livenessProbe:
+            exec:
+              command:
+                - ./bin/health-check-sidekiq
+            initialDelaySeconds: 30
           envFrom:
             - configMapRef:
                 name: demoapp-rails-env
