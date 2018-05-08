@@ -2,6 +2,9 @@
 
 cd $(dirname $0)/..
 
+trap "pkill -P $$" EXIT
+
 ./bin/wait-for $MYSQL_HOST 3306
+./bin/wait-for $REDIS_HOST 6379
 ./bin/rails db:setup_if_not_yet
 ./bin/pumactl start
