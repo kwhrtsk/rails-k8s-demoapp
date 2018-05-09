@@ -6,6 +6,7 @@ metadata:
 data:
   RAILS_SERVE_STATIC_FILES: {{ .Values.rails.railsServeStaticFiles | quote }}
   RAILS_LOG_TO_STDOUT: {{ .Values.rails.railsLogToStdout | quote }} 
+  SIDEKIQ_TIMEOUT: {{ .Values.sidekiq.timeout | quote }}
   MYSQL_HOST: {{ template "demoapp.mysql.name" . }}
   MYSQL_USER: {{ .Values.mysql.user }}
   MYSQL_DATABASE: {{ .Values.mysql.database }}

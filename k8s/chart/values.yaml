@@ -23,6 +23,7 @@ puma:
 
 sidekiq:
   replicas: 1
+  timeout: 60
 
 rails:
   image:

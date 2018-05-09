@@ -24,6 +24,7 @@ spec:
         component: sidekiq
     spec:
       restartPolicy: Always
+      terminationGracePeriodSeconds: {{ .Values.sidekiq.timeout | add 5 }}
       containers:
         - name: sidekiq
           image: {{ .Values.rails.image.repository }}:{{ .Values.rails.image.tag }}
