@@ -41,4 +41,4 @@ deploy:
 	kubectl rollout status deploy demoapp-puma
 
 stern:
-	stern demoapp*
+	stern demoapp.*

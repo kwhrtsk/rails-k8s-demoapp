@@ -68,4 +68,4 @@ open:
 	open https://$(COMMON_NAME)
 
 stern:
-	stern demoapp*
+	stern $(release)-demoapp.*

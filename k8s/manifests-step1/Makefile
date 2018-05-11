@@ -24,4 +24,4 @@ kubectl-delete:
 	cat *.yaml | kubectl delete -f -
 
 stern:
-	stern demoapp*
+	stern demoapp.*
