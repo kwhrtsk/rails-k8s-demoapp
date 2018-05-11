@@ -4,12 +4,14 @@ kind: Job
 metadata:
   name: demoapp-setup-db
 spec:
+  backoffLimit: 4
   template:
     metadata:
       labels:
         app: demoapp
         component: setup-db
     spec:
+      restartPolicy: Never
       containers:
         - name: setup-db
           image: demoapp:0.0.1
@@ -20,5 +22,3 @@ spec:
                 name: demoapp-rails-env
             - secretRef:
                 name: demoapp-rails-env
-      restartPolicy: Never
-  backoffLimit: 4

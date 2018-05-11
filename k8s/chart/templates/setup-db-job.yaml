@@ -9,6 +9,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
+  backoffLimit: 4
   template:
     metadata:
       labels:
@@ -26,4 +27,3 @@ spec:
                 name: {{ template "demoapp.rails-env.name" . }}
             - secretRef:
                 name: {{ template "demoapp.rails-env.name" . }}
-  backoffLimit: 4
