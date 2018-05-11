@@ -9,7 +9,6 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     component: puma
-    track: stable
 spec:
   replicas: {{ .Values.puma.replicas }}
   selector:
