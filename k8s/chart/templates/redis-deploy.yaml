@@ -16,6 +16,8 @@ spec:
       app: {{ template "demoapp.name" . }}
       release: {{ .Release.Name }}
       component: redis
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:

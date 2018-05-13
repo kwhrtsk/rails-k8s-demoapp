@@ -12,6 +12,8 @@ spec:
     matchLabels:
       app: demoapp
       component: mysql
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:

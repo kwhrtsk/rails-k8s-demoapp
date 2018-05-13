@@ -16,6 +16,8 @@ spec:
       app: {{ template "demoapp.name" . }}
       release: {{ .Release.Name }}
       component: mysql
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:

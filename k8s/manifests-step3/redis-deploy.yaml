@@ -12,6 +12,8 @@ spec:
     matchLabels:
       app: demoapp
       component: redis
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
