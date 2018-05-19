@@ -16,6 +16,7 @@ kubectl-apply:
 
 kubectl-rollout-status:
 	kubectl rollout status deploy demoapp-puma
+	kubectl rollout status deploy demoapp-sidekiq
 
 minikube-service:
 	minikube service demoapp-puma

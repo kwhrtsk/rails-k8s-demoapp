@@ -29,6 +29,7 @@ kubectl-apply:
 
 kubectl-rollout-status:
 	kubectl rollout status deploy demoapp-puma
+	kubectl rollout status deploy demoapp-sidekiq
 
 minikube-service:
 	minikube service demoapp-puma
@@ -38,7 +39,9 @@ kubectl-delete:
 
 deploy:
 	kubectl set image deploy/demoapp-puma puma=demoapp:$(tag)
+	kubectl set image deploy/demoapp-sidekiq sidekiq=demoapp:$(tag)
 	kubectl rollout status deploy demoapp-puma
+	kubectl rollout status deploy demoapp-sidekiq
 
 stern:
 	stern demoapp.*
