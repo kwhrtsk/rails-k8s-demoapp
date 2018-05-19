@@ -57,7 +57,7 @@ server.pem:
 	openssl req -new -x509 -nodes -keyout server.key -days 3650 \
 		-subj "/CN=${COMMON_NAME}" \
 		-extensions v3_req \
-		-config <(cat openssl.conf | envsubst '$$COMMON_NAME') > server.pem
+		-config <(cat openssl.conf | sed s/\$${COMMON_NAME}/$(COMMON_NAME)/) > server.pem
 	openssl x509 -text < server.pem
 
 kubectl-create-secret-tls: server.pem

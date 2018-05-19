@@ -22,7 +22,7 @@ export COMMON_NAME=demoapp-puma.${MINIKUBE_IP}.nip.io
 openssl req -new -x509 -nodes -keyout server.key -days 3650 \
   -subj "/CN=${COMMON_NAME}" \
   -extensions v3_req \
-  -config <(cat openssl.conf | envsubst '$COMMON_NAME') > server.pem
+  -config <(cat openssl.conf | sed s/\${COMMON_NAME}/$COMMON_NAME/) > server.pem
 kubectl create secret tls demoapp-puma-tls --key server.key --cert server.pem
 
 # setup helm's server module a.k.a Tiller

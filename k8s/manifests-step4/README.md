@@ -11,14 +11,6 @@ Sample manifest using these API objects:
 * PersistentVolumeClaim
 * Ingress `<- New!`
 
-# Requirements
-
-* envsubst
-```
-brew install gettext
-brew link --force gettext
-```
-
 # Usage
 
 ```
@@ -31,11 +23,11 @@ export COMMON_NAME=demoapp-puma.${MINIKUBE_IP}.nip.io
 openssl req -new -x509 -nodes -keyout server.key -days 3650 \
   -subj "/CN=${COMMON_NAME}" \
   -extensions v3_req \
-  -config <(cat openssl.conf | envsubst '$COMMON_NAME') > server.pem
+  -config <(cat openssl.conf | sed s/\${COMMON_NAME}/$COMMON_NAME/) > server.pem
 kubectl create secret tls demoapp-puma-tls --key server.key --cert server.pem
 
 # setup all objects
-cat *.yaml | envsubst '$MINIKUBE_IP' | kubectl apply -f -
+cat *.yaml | sed s/\${MINIKUBE_IP}/$MINIKUBE_IP/ | kubectl apply -f -
 
 # wait until the deployment is completed
 kubectl rollout status deploy demoapp-puma
