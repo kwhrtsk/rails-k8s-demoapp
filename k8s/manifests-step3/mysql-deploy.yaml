@@ -25,6 +25,16 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: demoapp-mysql
+      initContainers:
+        - name: "remove-lost-found"
+          image: "busybox:1.25.0"
+          command: 
+            - rm
+            - -fr
+            - /var/lib/mysql/lost+found
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
       containers:
         - name: mysql
           image: mysql:5.7.21

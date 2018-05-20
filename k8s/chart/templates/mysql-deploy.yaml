@@ -30,6 +30,16 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: {{ template "demoapp.mysql.name" . }}
+      initContainers:
+        - name: "remove-lost-found"
+          image: "busybox:1.25.0"
+          command: 
+            - rm
+            - -fr
+            - /var/lib/mysql/lost+found
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
       containers:
         - name: mysql
           image: {{ .Values.mysql.image.repository }}:{{ .Values.mysql.image.tag }}
