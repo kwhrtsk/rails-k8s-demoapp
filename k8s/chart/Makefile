@@ -50,6 +50,9 @@ helm-delete:
 	helm delete $(release) --purge
 	kubectl delete secret demoapp-puma-tls
 
+helm-template:
+	helm template . --name $(release)
+
 deploy:
 	helm upgrade $(release) . --install --wait --set ingress.host=$(COMMON_NAME) --set rails.image.tag=$(TAG)
 
