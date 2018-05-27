@@ -4,11 +4,11 @@ kind: ConfigMap
 metadata:
   name: {{ template "demoapp.rails-env.name" . }}
 data:
-  RAILS_SERVE_STATIC_FILES: {{ .Values.rails.railsServeStaticFiles | quote }}
-  RAILS_LOG_TO_STDOUT: {{ .Values.rails.railsLogToStdout | quote }} 
+  RAILS_SERVE_STATIC_FILES: {{ .Values.env.configmap.RAILS_SERVE_STATIC_FILES | quote }}
+  RAILS_LOG_TO_STDOUT: {{ .Values.env.configmap.RAILS_LOG_TO_STDOUT | quote }} 
   SIDEKIQ_TIMEOUT: {{ .Values.sidekiq.timeout | quote }}
   MYSQL_HOST: {{ template "demoapp.mysql.name" . }}
-  MYSQL_USER: {{ .Values.mysql.user }}
-  MYSQL_DATABASE: {{ .Values.mysql.database }}
+  MYSQL_USER: {{ .Values.env.configmap.MYSQL_USER }}
+  MYSQL_DATABASE: {{ .Values.env.configmap.MYSQL_DATABASE }}
   REDIS_HOST: {{ template "demoapp.redis.name" . }}
   REDIS_URL: redis://{{ template "demoapp.redis.name" . }}:6379/1
