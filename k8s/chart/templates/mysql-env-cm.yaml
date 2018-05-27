@@ -4,5 +4,5 @@ kind: ConfigMap
 metadata:
   name: {{ template "demoapp.mysql-env.name" . }}
 data:
-  MYSQL_USER: {{ .Values.mysql.user }}
-  MYSQL_DATABASE: {{ .Values.mysql.database }}
+  MYSQL_USER: {{ .Values.env.configmap.MYSQL_USER }}
+  MYSQL_DATABASE: {{ .Values.env.configmap.MYSQL_DATABASE }}

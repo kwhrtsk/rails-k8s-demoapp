@@ -5,10 +5,6 @@ mysql:
   storage:
     size: 8Gi
     className: standard
-  user: demoapp
-  database: demoapp_production
-  password: secret
-  rootPassword: topsecret
 
 redis:
   image:
@@ -30,12 +26,20 @@ rails:
     repository: demoapp
     tag: 0.0.1
     setupDbTag: 0.0.1
-  railsServeStaticFiles: "true"
-  railsLogToStdout: "true"
-  secretKeyBase: "123"
 
 ingress:
   tlsSecretName: demoapp-puma-tls
   # required from --set parameter
   # helm upgrade release-name . --set ingress.host=demoapp-puma.${MINIKUBE_IP}.nip.io
   # host: demoapp-puma.${MINIKUBE_IP}.nip.io
+
+env:
+  configmap:
+    MYSQL_USER: demoapp
+    MYSQL_DATABASE: demoapp_production
+    RAILS_SERVE_STATIC_FILES: "true"
+    RAILS_LOG_TO_STDOUT: "true"
+  secret:
+    MYSQL_PASSWORD: secret
+    MYSQL_ROOT_PASSWORD: topsecret
+    SECRET_KEY_BASE: "123"
