@@ -44,6 +44,12 @@ $ docker-compose up -d
 $ bundle install
 $ gem install foreman
 
+# Install npm
+$ yarn install
+
+# Initialize database
+$ ./bin/rails db:setup
+
 # Start puma, sidekiq and webpack-dev-server
 $ foreman start -f Procfile
 ```
