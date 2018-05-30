@@ -1,8 +1,6 @@
 Sample application for Docker/Kubernetes/Helm with Rails
 ========================================================
 
-**WIP**
-
 Minimal sample application to demonstrate Rails application development with Docker, Kubernetes and Helm.
 
 # Start preview mode with Docker Compose
@@ -61,9 +59,9 @@ Tested with:
 
 | Name         | Version                |
 | ------------ | ---------------------- |
-| minikube     | 0.26.1 (k8s 1.10.0)    |
-| kubectl      | 1.10.1                 |
-| helm         | 2.8.2                  |
+| minikube     | 0.27.0 (k8s 1.10.0)    |
+| kubectl      | 1.10.2                 |
+| helm         | 2.9.1                  |
 | hyperkit     | v0.20171204-60-g0e5b6b |
 | stern        | 1.6.0                  |
 
