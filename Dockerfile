@@ -6,6 +6,8 @@ ARG BUILD_PACKAGES="build-base curl-dev git"
 ARG DEV_PACKAGES="libxml2-dev libxslt-dev mysql-dev yaml-dev zlib-dev nodejs yarn"
 ARG RUBY_PACKAGES="tzdata yaml"
 
+ENV BUNDLE_APP_CONFIG="$RAILS_ROOT/.bundle"
+
 WORKDIR $RAILS_ROOT
 
 # install packages
