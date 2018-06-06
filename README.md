@@ -3,6 +3,10 @@ Sample application for Docker/Kubernetes/Helm with Rails
 
 Minimal sample application to demonstrate Rails application development with Docker, Kubernetes and Helm.
 
+See [blog][blog] for details.
+
+[blog]: https://chopschips.net/blog/2018/05/30/docker-with-rails/
+
 # Start preview mode with Docker Compose
 
 Prerequisites
